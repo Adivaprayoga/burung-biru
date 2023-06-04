@@ -11,7 +11,7 @@ type Tweet = {
     createdAt: Date
     likeCount: number
     likedByMe: boolean
-    user: { id: string, image: string | null, name: string | null}
+    user: { id: string, image: string | null, name: string | null, email: string | null }
 }
 
 type InfiniteTweetListProps = {
@@ -25,9 +25,9 @@ type InfiniteTweetListProps = {
 export function InfiniteTweetList({ tweets, isLoading, isError, fetchNewTweets, hasMore }: InfiniteTweetListProps) {
     if (isLoading) return <h1>Loading...</h1>
     if (isError) return <h1>Error...</h1>
-    if (tweets == null ) return null
+    if (tweets == null) return null
 
-    if(tweets == null || tweets.length === 0) {
+    if (tweets == null || tweets.length === 0) {
         return <h2 className="my-4 text-center text-2x1 text-gray-500">No Tweets</h2>
     }
 
@@ -45,23 +45,24 @@ export function InfiniteTweetList({ tweets, isLoading, isError, fetchNewTweets, 
     </ul>
 }
 
-const dateTimeFormatter = Intl.DateTimeFormat(undefined, { dateStyle: "short"})
+const dateTimeFormatter = Intl.DateTimeFormat(undefined, { dateStyle: "medium" })
 
-function TweetCard({ id, user, content, createdAt, likeCount, likedByMe} : Tweet) {
+function TweetCard({ id, user, content, createdAt, likeCount, likedByMe }: Tweet) {
     return <li className="flex gap-4 border-b px-4 py-4">
         <Link href={`/profiles/${user.id}`}>
-            <ProfileImage src={user.image}/>
+            <ProfileImage src={user.image} />
         </Link>
         <div className="flex flex-grow flex-col">
-            <div className="flex gap-1">
-                <Link 
-                    href={`/profiles/${user.id}`} 
+            <div className="flex gap-1 items-center">
+                <Link
+                    href={`/profiles/${user.id}`}
                     className="font-bold outline-none hover:underline focus-visible:underline"
                 >
                     {user.name}
                 </Link>
-                <span className="text-gray-500">-</span>
-                <span className="text-gray-500">{dateTimeFormatter.format(createdAt)}</span>
+                <span className="text-sm text-gray-500">{user.email}</span>
+                <span className="text-xl text-black-700 px-1">·</span>
+                <span className="text-md text-gray-500">{dateTimeFormatter.format(createdAt)}</span>
             </div>
             <p className="whitespace-pre-wrap">{content}</p>
             <HeartButton likedByMe={likedByMe} likeCount={likeCount} />
@@ -74,7 +75,7 @@ type HeartButtonProps = {
     likeCount: number;
 }
 
-function HeartButton({ likedByMe, likeCount } : HeartButtonProps ){
+function HeartButton({ likedByMe, likeCount }: HeartButtonProps) {
     const session = useSession()
     const HeartIcon = likedByMe ? VscHeartFilled : VscHeart
 
@@ -88,22 +89,20 @@ function HeartButton({ likedByMe, likeCount } : HeartButtonProps ){
     }
 
     return (
-        <button className={`group items-center gap-1 self-start flex transition-colors duration-200 ${
-            likedByMe 
-                ? "text-red-500" 
+        <button className={`group items-center gap-1 self-start flex transition-colors duration-200 ${likedByMe
+                ? "text-red-500"
                 : "text-gray-500 hover:text-red-500 focus-visible:text-red-500"
             }`}
         >
             <IconHoverEffect red>
-                <HeartIcon className={`trasition-colors duration-200 ${
-                    likedByMe 
-                        ? "fill-red-500" 
+                <HeartIcon className={`transition-colors duration-200 ${likedByMe
+                        ? "fill-red-500"
                         : "fill-gray-500 group-hover:fill-red-500 group-focus-visible:fill-red-500"
-                    }`} 
+                    }`}
                 />
             </IconHoverEffect>
 
             <span>{likeCount}</span>
-        </button> 
+        </button>
     );
 }
