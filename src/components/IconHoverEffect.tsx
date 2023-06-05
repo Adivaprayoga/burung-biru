@@ -1,14 +1,23 @@
-import type { ReactNode } from "react"
+import type { ReactNode } from "react";
 
 type IconHoverEffectProps = {
-    children: ReactNode
-    red?: boolean
-}
+  children: ReactNode;
+  red?: boolean;
+};
 
-export function IconHoverEffect({children, red = false}: IconHoverEffectProps) {
-    const colorClasses = red ? "outline-red-400 hover:bg-red-200 group-hover-bg-red-200 group-focus-visible:bg-red-200 focus-visible:bg-red-200" : "outline-gray-400 hover:bg-gray-100 group-hover-bg-gray-100 group-focus-visible:bg-gray-100 focus-visible:bg-gray-100"
+export function IconHoverEffect({
+  children,
+  red = false,
+}: IconHoverEffectProps) {
+  const colorClasses = red
+    ? "outline-red-400 hover:bg-red-200 group-hover-bg-red-200 group-focus-visible:bg-red-200 focus-visible:bg-red-200"
+    : "outline-gray-400 hover:bg-gray-100 group-hover-bg-gray-100 group-focus-visible:bg-gray-100 focus-visible:bg-gray-100";
 
-    return <div className={`rounded-full py-2 px-4 transition-colors duration-200 ${colorClasses}`}>
-        {children}
+  return (
+    <div
+      className={`rounded-full px-4 py-2 transition-colors duration-200 ${colorClasses}`}
+    >
+      {children}
     </div>
+  );
 }
