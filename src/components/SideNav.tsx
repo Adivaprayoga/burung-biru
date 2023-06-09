@@ -36,42 +36,6 @@ export function SideNav() {
             </IconHoverEffect>
           </Link>
         </li>
-        <li>
-          <Link href="/">
-            <IconHoverEffect>
-              <span className="flex items-center gap-4">
-                <MdGrid3X3 className="h-8 w-8" />
-                <span className="text-black-500 hidden text-lg md:inline">
-                  Explore
-                </span>
-              </span>
-            </IconHoverEffect>
-          </Link>
-        </li>
-        <li>
-          <Link href="/">
-            <IconHoverEffect>
-              <span className="flex items-center gap-4">
-                <GrNotification className="h-8 w-8" />
-                <span className="text-black-500 hidden text-lg md:inline">
-                  Notifications
-                </span>
-              </span>
-            </IconHoverEffect>
-          </Link>
-        </li>
-        <li>
-          <Link href="/">
-            <IconHoverEffect>
-              <span className="flex items-center gap-4">
-                <MdOutlineMail className="h-8 w-8" />
-                <span className="text-black-500 hidden text-lg md:inline">
-                  Messages
-                </span>
-              </span>
-            </IconHoverEffect>
-          </Link>
-        </li>
       </ul>
 
       <ul>
