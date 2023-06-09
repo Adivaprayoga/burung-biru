@@ -76,6 +76,10 @@ function Form() {
     createTweet.mutate({ content: inputValue });
   }
 
+  function handleChange(e: any) {
+    setInputValue(e);
+  }
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -87,12 +91,14 @@ function Form() {
           ref={inputRef}
           style={{ height: 0 }}
           value={inputValue}
-          onChange={(e) => setInputValue(e.target.value)}
+          onChange={(e) => handleChange(e.target.value)}
           className="flex-grow resize-none overflow-hidden p-4 text-lg outline-none"
           placeholder="What's happening?"
         ></textarea>
       </div>
-      <Button className="self-end">Tweet</Button>
+      <Button className="self-end" disabled={!inputValue}>
+        Tweet
+      </Button>
     </form>
   );
 }
