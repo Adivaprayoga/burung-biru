@@ -163,7 +163,7 @@ function HeartButton({
 
   if (session.status != "authenticated") {
     return (
-      <div className="mb-1 mt-2 flex items-center gap-3 self-start text-gray-500">
+      <div className="mb-1 mt-2 flex items-center self-start text-gray-500">
         <HeartIcon />
         <span>{likeCount}</span>
       </div>
@@ -174,7 +174,7 @@ function HeartButton({
     <button
       disabled={isLoading}
       onClick={onClick}
-      className={`group flex items-center gap-1 self-start transition-colors duration-200 ${
+      className={`group flex items-center self-start transition-colors duration-200 ${
         likedByMe
           ? "text-red-500"
           : "text-gray-500 hover:text-red-500 focus-visible:text-red-500"

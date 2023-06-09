@@ -14,7 +14,7 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-10 border-b bg-white pb-6 pt-2">
+      <header className="sticky top-0 z-10 border-b bg-white pt-2">
         <h1 className="mb-2 px-4 text-lg font-bold">Home</h1>
         {session.status === "authenticated" && (
           <div className="flex">
@@ -22,14 +22,17 @@ const Home: NextPage = () => {
               return (
                 <button
                   key={tab}
-                  className={`flex-grow p-2 hover:bg-gray-200 focus-visible:bg-gray-200 ${
-                    tab === selectedTab
-                      ? "border-b-4 border-b-sky-500 font-bold"
-                      : ""
-                  }`}
+                  className="relative flex-grow px-2 py-4 hover:bg-gray-200 focus-visible:bg-gray-200"
                   onClick={() => setSelectedTab(tab)}
                 >
-                  {tab}
+                  <span className="font-bold">{tab}</span>
+                  <div
+                    className={`${
+                      tab === selectedTab
+                        ? "absolute bottom-0 left-0 right-0 m-auto w-2/12 rounded-full border-b-4 border-b-sky-500"
+                        : ""
+                    }`}
+                  ></div>
                 </button>
               );
             })}
