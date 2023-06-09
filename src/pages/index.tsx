@@ -25,7 +25,9 @@ const Home: NextPage = () => {
                   className="relative flex-grow px-2 py-4 hover:bg-gray-200 focus-visible:bg-gray-200"
                   onClick={() => setSelectedTab(tab)}
                 >
-                  <span className="font-bold">{tab}</span>
+                  <span className={`${tab === selectedTab && "font-bold"}`}>
+                    {tab}
+                  </span>
                   <div
                     className={`${
                       tab === selectedTab
