@@ -15,6 +15,9 @@ import { ProfileImage } from "~/components/ProfileImage";
 import { InfiniteTweetList } from "~/components/InfiniteTweetList";
 import { useSession } from "next-auth/react";
 import { Button } from "~/components/Button";
+import { useState } from "react";
+
+const TABS = ["Tweets", "Replies", "Media", "Likes"];
 
 const ProfilePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
   id,
@@ -47,44 +50,137 @@ const ProfilePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
     return <ErrorPage statusCode={404} />;
   }
 
+  const [selectedTab, setSelectedTab] =
+    useState<(typeof TABS)[number]>("Tweets");
+
+  const [isHovering, setIsHovering] = useState(false);
+
+  const handleMouseOver = () => {
+    setIsHovering(true);
+  };
+
+  const handleMouseOut = () => {
+    setIsHovering(false);
+  };
+
+  const session = useSession();
+
   return (
     <>
       <Head>
         <title>{`Twitter Clone - ${profile.name}`}</title>
       </Head>
-      <header className="sticky top-0 z-10 flex items-center border-b bg-white px-4 py-2">
-        <Link href=".." className="mr-2">
-          <IconHoverEffect>
-            <VscArrowLeft className="h-6 w-6" />
-          </IconHoverEffect>
-        </Link>
+      <header className="sticky top-0 z-10 flex-col items-center border-b bg-white">
+        <div>
+          <div className="flex items-center px-4 py-2">
+            <Link href=".." className="mr-6">
+              <IconHoverEffect>
+                <VscArrowLeft className="h-6 w-6" />
+              </IconHoverEffect>
+            </Link>
+            <div>
+              <div className="text-xl font-bold">{profile.name}</div>
+              <div className="text-sm text-gray-500">
+                <span>{profile.tweetsCount} </span>
+                {getPlural(profile.tweetsCount, "Tweet", "Tweets")}{" "}
+              </div>
+            </div>
+          </div>
 
-        <ProfileImage src={profile.image} className="flex-shrink-0" />
+          <div className="relative mb-6 h-48 bg-gray-300">
+            <ProfileImage
+              src={profile.image}
+              width={125}
+              height={125}
+              className="absolute -bottom-10 left-0 cursor-pointer px-6"
+            />
+          </div>
 
-        <div className="ml-2 flex-grow">
-          <h1 className="text-lg font-bold">{profile.name}</h1>
-          <div className="text-gray-500">
-            {profile.tweetsCount}{" "}
-            {getPlural(profile.tweetsCount, "Tweet", "Tweets")}{" "}
-            {profile.followersCount}{" "}
-            {getPlural(profile.followersCount, "Follower", "Followers")}{" "}
-            {profile.tweetsCount} Following
+          <div className="mb-2 flex justify-between px-6 pb-2 pt-6">
+            <div>
+              <p className="text-xl font-bold">{profile.name}</p>
+              <p className="text-gray-500">{profile.email}</p>
+              <div className="mt-4 text-gray-500">
+                <span className="mr-4">
+                  <span className="pr-1 font-bold text-black">
+                    {profile.followsCount}
+                  </span>
+                  <span>Following</span>
+                </span>
+                <span>
+                  <span className="pr-1 font-bold text-black">
+                    {profile.followersCount}
+                  </span>
+                  {getPlural(profile.followersCount, "Follower", "Followers")}{" "}
+                </span>
+              </div>
+            </div>
+            <div>
+              <FollowButton
+                isFollowing={profile.isFollowing}
+                isLoading={toggleFollow.isLoading}
+                userId={id}
+                onClick={() => toggleFollow.mutate({ userId: id })}
+                handleMouseOver={handleMouseOver}
+                handleMouseOut={handleMouseOut}
+                isHovering={isHovering}
+              />
+            </div>
           </div>
         </div>
-        <FollowButton
-          isFollowing={profile.isFollowing}
-          isLoading={toggleFollow.isLoading}
-          userId={id}
-          onClick={() => toggleFollow.mutate({ userId: id })}
-        />
+        <div>
+          {session.status === "authenticated" && (
+            <div className="flex">
+              {TABS.map((tab) => {
+                return (
+                  <button
+                    key={tab}
+                    className="relative flex-grow px-4 py-4 hover:bg-gray-200 focus-visible:bg-gray-200"
+                    onClick={() => setSelectedTab(tab)}
+                  >
+                    <span
+                      className={`${
+                        tab === selectedTab && "font-bold text-black"
+                      } text-gray-500`}
+                    >
+                      {tab}
+                    </span>
+                    <div
+                      className={`${
+                        tab === selectedTab
+                          ? "absolute bottom-0 left-0 right-0 m-auto w-2/12 rounded-full border-b-4 border-b-sky-500"
+                          : ""
+                      }`}
+                    ></div>
+                  </button>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </header>
-      <InfiniteTweetList
-        tweets={tweets.data?.pages.flatMap((page) => page.tweets)}
-        isError={tweets.isError}
-        isLoading={tweets.isLoading}
-        hasMore={tweets.hasNextPage}
-        fetchNewTweets={tweets.fetchNextPage}
-      />
+      {(() => {
+        switch (selectedTab) {
+          case "Tweets":
+            return (
+              <InfiniteTweetList
+                tweets={tweets.data?.pages.flatMap((page) => page.tweets)}
+                isError={tweets.isError}
+                isLoading={tweets.isLoading}
+                hasMore={tweets.hasNextPage}
+                fetchNewTweets={tweets.fetchNextPage}
+              />
+            );
+          case "Replies":
+            return <h1>Replies</h1>;
+          case "Media":
+            return <h1>Media</h1>;
+          case "Likes":
+            return <h1>Likes</h1>;
+          default:
+            return null;
+        }
+      })()}
     </>
   );
 };
@@ -94,11 +190,17 @@ function FollowButton({
   isFollowing,
   isLoading,
   onClick,
+  handleMouseOver,
+  handleMouseOut,
+  isHovering,
 }: {
   userId: string;
   isFollowing: boolean;
   isLoading: boolean;
   onClick: () => void;
+  handleMouseOver: () => void;
+  handleMouseOut: () => void;
+  isHovering: boolean;
 }) {
   const session = useSession();
 
@@ -106,8 +208,15 @@ function FollowButton({
     return null;
   }
   return (
-    <Button disabled={isLoading} onClick={onClick} small gray={isFollowing}>
-      {isFollowing ? "Unfollow" : "Follow"}
+    <Button
+      onMouseOver={handleMouseOver}
+      onMouseOut={handleMouseOut}
+      disabled={isLoading}
+      onClick={onClick}
+      small
+      gray={isFollowing}
+    >
+      {isFollowing ? (isHovering ? "Unfollow" : "Following") : "Follow"}
     </Button>
   );
 }
