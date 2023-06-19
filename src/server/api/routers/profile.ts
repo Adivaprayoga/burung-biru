@@ -19,6 +19,7 @@ export const profileRouter = createTRPCRouter({
         select: {
           name: true,
           image: true,
+          email: true,
           _count: { select: { followers: true, follows: true, tweets: true } },
           followers:
             currentUserId == null
@@ -32,6 +33,7 @@ export const profileRouter = createTRPCRouter({
       return {
         name: profile.name,
         image: profile.image,
+        email: profile.email,
         followersCount: profile._count.followers,
         followsCount: profile._count.follows,
         tweetsCount: profile._count.tweets,

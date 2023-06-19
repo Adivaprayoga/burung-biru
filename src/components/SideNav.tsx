@@ -44,7 +44,7 @@ export function SideNav() {
             <Link href={`/profiles/${user.id}`}>
               <IconHoverEffect>
                 <span className="flex items-center gap-4">
-                  <ProfileImage src={user.image} />
+                  <ProfileImage src={user.image} width={50} height={50} />
                   <span className="hidden md:inline">
                     <p className="text-black-700 text-lg font-semibold">
                       {user.name}

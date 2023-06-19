@@ -124,8 +124,8 @@ function TweetCard({
 
   return (
     <li className="flex gap-4 border-b px-4 py-4">
-      <Link href={`/profiles/${user.id}`}>
-        <ProfileImage src={user.image} />
+      <Link href={`/profiles/${user.id}`} className="ml-4">
+        <ProfileImage src={user.image} width={50} height={50} />
       </Link>
       <div className="flex flex-grow flex-col">
         <div className="flex items-center gap-1">
@@ -135,7 +135,6 @@ function TweetCard({
           >
             {user.name}
           </Link>
-          <span className="text-sm text-gray-500">{user.email}</span>
           <span className="text-black-700 px-1 text-xl">·</span>
           <span className="text-md text-gray-500">
             {dateTimeFormatter.format(createdAt)}

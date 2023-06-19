@@ -86,7 +86,7 @@ function Form() {
       className="flex flex-col gap-2 border-b px-4 py-4"
     >
       <div className="flex gap-4">
-        <ProfileImage src={session.data.user.image} />
+        <ProfileImage src={session.data.user.image} width={50} height={50} />
         <textarea
           ref={inputRef}
           style={{ height: 0 }}
