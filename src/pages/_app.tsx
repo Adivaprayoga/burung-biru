@@ -7,6 +7,7 @@ import { api } from "~/utils/api";
 import "~/styles/globals.css";
 import Head from "next/head";
 import { SideNav } from "~/components/SideNav";
+import AuthCheck from "~/components/AuthCheck";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
@@ -19,12 +20,13 @@ const MyApp: AppType<{ session: Session | null }> = ({
         <meta name="description" content="This is Twitter clone by Adiva" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <div className="container mx-auto flex items-start sm:pr-4">
+      <div className="container relative mx-auto flex items-start sm:pr-4">
         <SideNav />
         <div className="min-h-screen flex-grow border-x">
           <Component {...pageProps} />
         </div>
       </div>
+      <AuthCheck />
     </SessionProvider>
   );
 };
