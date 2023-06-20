@@ -70,7 +70,7 @@ const ProfilePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
       <Head>
         <title>{`Twitter Clone - ${profile.name}`}</title>
       </Head>
-      <header className="sticky top-0 z-10 flex-col items-center border-b bg-white">
+      <header className="sticky top-0 z-10 flex-col items-center border-b bg-white/90">
         <div>
           <div className="flex items-center px-4 py-2">
             <Link href=".." className="mr-6">
@@ -86,79 +86,76 @@ const ProfilePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
               </div>
             </div>
           </div>
+        </div>
+      </header>
 
-          <div className="relative mb-6 h-48 bg-gray-300">
-            <ProfileImage
-              src={profile.image}
-              width={125}
-              height={125}
-              className="absolute -bottom-10 left-0 cursor-pointer px-6"
-            />
-          </div>
+      <div className="relative mb-6 h-48 bg-gray-300">
+        <ProfileImage
+          src={profile.image}
+          width={125}
+          height={125}
+          className="absolute -bottom-10 left-0 cursor-pointer px-6"
+        />
+      </div>
 
-          <div className="mb-2 flex justify-between px-6 pb-2 pt-6">
-            <div>
-              <p className="text-xl font-bold">{profile.name}</p>
-              <p className="text-gray-500">{profile.email}</p>
-              <div className="mt-4 text-gray-500">
-                <span className="mr-4">
-                  <span className="pr-1 font-bold text-black">
-                    {profile.followsCount}
-                  </span>
-                  <span>Following</span>
-                </span>
-                <span>
-                  <span className="pr-1 font-bold text-black">
-                    {profile.followersCount}
-                  </span>
-                  {getPlural(profile.followersCount, "Follower", "Followers")}{" "}
-                </span>
-              </div>
-            </div>
-            <div>
-              <FollowButton
-                isFollowing={profile.isFollowing}
-                isLoading={toggleFollow.isLoading}
-                userId={id}
-                onClick={() => toggleFollow.mutate({ userId: id })}
-                handleMouseOver={handleMouseOver}
-                handleMouseOut={handleMouseOut}
-                isHovering={isHovering}
-              />
-            </div>
+      <div className="mb-2 flex justify-between px-6 pb-2 pt-6">
+        <div>
+          <p className="text-xl font-bold">{profile.name}</p>
+          <p className="text-gray-500">{profile.email}</p>
+          <div className="mt-4 text-gray-500">
+            <span className="mr-4">
+              <span className="pr-1 font-bold text-black">
+                {profile.followsCount}
+              </span>
+              <span>Following</span>
+            </span>
+            <span>
+              <span className="pr-1 font-bold text-black">
+                {profile.followersCount}
+              </span>
+              {getPlural(profile.followersCount, "Follower", "Followers")}{" "}
+            </span>
           </div>
         </div>
         <div>
-          {session.status === "authenticated" && (
-            <div className="flex">
-              {TABS.map((tab) => {
-                return (
-                  <button
-                    key={tab}
-                    className="relative flex-grow px-4 py-4 hover:bg-gray-200 focus-visible:bg-gray-200"
-                    onClick={() => setSelectedTab(tab)}
-                  >
-                    <span
-                      className={`${
-                        tab === selectedTab && "font-bold"
-                      } text-black`}
-                    >
-                      {tab}
-                    </span>
-                    <div
-                      className={`${
-                        tab === selectedTab
-                          ? "absolute bottom-0 left-0 right-0 m-auto w-2/12 rounded-full border-b-4 border-b-sky-500"
-                          : ""
-                      }`}
-                    ></div>
-                  </button>
-                );
-              })}
-            </div>
-          )}
+          <FollowButton
+            isFollowing={profile.isFollowing}
+            isLoading={toggleFollow.isLoading}
+            userId={id}
+            onClick={() => toggleFollow.mutate({ userId: id })}
+            handleMouseOver={handleMouseOver}
+            handleMouseOut={handleMouseOut}
+            isHovering={isHovering}
+          />
         </div>
-      </header>
+      </div>
+      {/* </div> */}
+      <div>
+        <div className="flex">
+          {TABS.map((tab) => {
+            return (
+              <button
+                key={tab}
+                className="relative flex-grow px-4 py-4 hover:bg-gray-200 focus-visible:bg-gray-200"
+                onClick={() => setSelectedTab(tab)}
+              >
+                <span
+                  className={`${tab === selectedTab && "font-bold"} text-black`}
+                >
+                  {tab}
+                </span>
+                <div
+                  className={`${
+                    tab === selectedTab
+                      ? "absolute bottom-0 left-0 right-0 m-auto w-2/12 rounded-full border-b-4 border-b-sky-500"
+                      : ""
+                  }`}
+                ></div>
+              </button>
+            );
+          })}
+        </div>
+      </div>
       {(() => {
         switch (selectedTab) {
           case "Tweets":

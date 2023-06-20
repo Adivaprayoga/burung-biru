@@ -14,8 +14,8 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <header className="sticky top-0 z-10 border-b bg-white pt-4">
-        <h1 className="px-4 text-lg font-bold">
+      <header className="sticky top-0 z-10 border-b bg-white/90 pt-4">
+        <h1 className="px-4 pb-4 text-lg font-bold">
           {session.status === "unauthenticated" ? "Explore" : "Home"}
         </h1>
         {session.status === "authenticated" && (

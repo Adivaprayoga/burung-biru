@@ -11,7 +11,7 @@ const AuthCheck = () => {
   return (
     <>
       {session.status === "unauthenticated" && (
-        <div className="sticky bottom-0 bg-sky-500">
+        <div className="sticky bottom-0 z-20 -mt-20 bg-sky-500">
           <div className="align-items container mx-auto flex items-center justify-around p-4">
             <div>
               <h1 className="text-xl font-bold text-white">

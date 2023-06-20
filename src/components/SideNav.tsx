@@ -10,7 +10,7 @@ export function SideNav() {
   const user = session.data?.user;
 
   return (
-    <nav className="sticky top-0 flex h-screen flex-col justify-between px-2 py-4">
+    <nav className="sticky top-0 flex h-screen flex-col justify-between px-2 py-2">
       <ul className="flex flex-col items-start gap-4 whitespace-nowrap">
         <li>
           <Link href="/">

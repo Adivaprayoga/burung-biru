@@ -189,7 +189,7 @@ function HeartButton({
           : "text-gray-500 hover:text-red-500 focus-visible:text-red-500"
       }`}
     >
-      <IconHoverEffect red className="px-4 py-2">
+      <IconHoverEffect red className="py px-4">
         <HeartIcon
           className={`transition-colors duration-200 ${
             likedByMe
