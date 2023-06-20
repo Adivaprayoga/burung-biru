@@ -5,17 +5,19 @@ import { InfiniteTweetList } from "~/components/InfiniteTweetList";
 import { NewTweetForm } from "~/components/NewTweetForm";
 import { api } from "~/utils/api";
 
-const TABS = ["Recent", "Following"] as const;
+const TABS = ["For you", "Following"] as const;
 
 const Home: NextPage = () => {
   const [selectedTab, setSelectedTab] =
-    useState<(typeof TABS)[number]>("Recent");
+    useState<(typeof TABS)[number]>("For you");
   const session = useSession();
 
   return (
     <>
-      <header className="sticky top-0 z-10 border-b bg-white pt-2">
-        <h1 className="mb-2 px-4 text-lg font-bold">Home</h1>
+      <header className="sticky top-0 z-10 border-b bg-white pt-4">
+        <h1 className="px-4 text-lg font-bold">
+          {session.status === "unauthenticated" ? "Explore" : "Home"}
+        </h1>
         {session.status === "authenticated" && (
           <div className="flex">
             {TABS.map((tab) => {
@@ -42,7 +44,7 @@ const Home: NextPage = () => {
         )}
       </header>
       <NewTweetForm />
-      {selectedTab === "Recent" ? <RecentTweets /> : <FollowingTweets />}
+      {selectedTab === "For you" ? <RecentTweets /> : <FollowingTweets />}
     </>
   );
 };

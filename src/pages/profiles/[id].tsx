@@ -74,7 +74,7 @@ const ProfilePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
         <div>
           <div className="flex items-center px-4 py-2">
             <Link href=".." className="mr-6">
-              <IconHoverEffect>
+              <IconHoverEffect className="px-2 py-2">
                 <VscArrowLeft className="h-6 w-6" />
               </IconHoverEffect>
             </Link>
@@ -140,8 +140,8 @@ const ProfilePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
                   >
                     <span
                       className={`${
-                        tab === selectedTab && "font-bold text-black"
-                      } text-gray-500`}
+                        tab === selectedTab && "font-bold"
+                      } text-black`}
                     >
                       {tab}
                     </span>
