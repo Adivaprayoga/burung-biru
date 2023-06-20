@@ -101,7 +101,7 @@ function Form() {
           placeholder="What's happening?"
         ></textarea>
       </div>
-      <Button className="self-end" disabled={!inputValue}>
+      <Button className="self-end" disabled={!inputValue} size="sm">
         Tweet
       </Button>
     </form>

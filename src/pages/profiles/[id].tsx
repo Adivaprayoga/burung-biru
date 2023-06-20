@@ -213,8 +213,8 @@ function FollowButton({
       onMouseOut={handleMouseOut}
       disabled={isLoading}
       onClick={onClick}
-      small
-      gray={isFollowing}
+      border
+      buttonType={isFollowing ? "btn-unfollow" : null}
     >
       {isFollowing ? (isHovering ? "Unfollow" : "Following") : "Follow"}
     </Button>

@@ -22,7 +22,9 @@ const AuthCheck = () => {
               </p>
             </div>
             <div>
-              <Button onClick={handleGithubSignin}>Log in</Button>
+              <Button onClick={handleGithubSignin} buttonType={"btn-white"}>
+                Log in
+              </Button>
             </div>
           </div>
         </div>
