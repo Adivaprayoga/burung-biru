@@ -63,8 +63,6 @@ const ProfilePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
     setIsHovering(false);
   };
 
-  const session = useSession();
-
   return (
     <>
       <Head>
@@ -129,9 +127,8 @@ const ProfilePage: NextPage<InferGetStaticPropsType<typeof getStaticProps>> = ({
           />
         </div>
       </div>
-      {/* </div> */}
       <div>
-        <div className="flex">
+        <div className="flex border-b">
           {TABS.map((tab) => {
             return (
               <button
